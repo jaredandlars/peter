@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jared and Lars' Sandwich Shop</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            color: #000;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background: #1e3a5f;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+        .numbers-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        #slot-text {
+            margin-bottom: 30px; /* Added 30 pixels of space */
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            font-size: 1.5em;
+            color: white;
+        }
+        .numbers-container div {
+            display: flex;
+            flex-wrap: wrap; /* Allow numbers to wrap */
+            justify-content: center;
+        }
+        .numbers-container span {
+            margin: 5px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            font-size: 1.2em;
+            color: white;
+            position: relative;
+        }
+        .smoke {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: puff 0.5s ease-out;
+        }
+        @keyframes puff {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+        .question {
+            margin: 20px 0;
+            font-weight: bold; /* Bold text */
+            font-size: 1.2em;  /* Increased font size by 2 points */
+        }
+        .hidden {
+            display: none;
+        }
+        .highlight {
+            background: yellow;
+            color: black;
+            font-weight: bold;
+        }
+        .confetti {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: fall 20s linear forwards;
+            transform-origin: center;
+            opacity: 0;
+        }
+        @keyframes fall {
+            0% { 
+                transform: translateY(-100vh) rotateX(0deg) rotateY(0deg) rotateZ(0deg); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translateY(100vh) rotateX(360deg) rotateY(360deg) rotateZ(360deg); 
+                opacity: 0; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Jared and Lars' Sandwich Shop</h1>
+    </header>
+    <div class="container">
+        <div class="numbers-container">
+            <span id="slot-text">Your Draft Slot:</span>
+            <div>
+                <span class="number" id="num-1">1</span>
+                <span class="number" id="num-2">2</span>
+                <span class="number" id="num-3">3</span>
+                <span class="number" id="num-4">4</span>
+                <span class="number" id="num-5">5</span>
+                <span class="number" id="num-6">6</span>
+                <span class="number" id="num-7">7</span>
+                <span class="number" id="num-8">8</span>
+                <span class="number" id="num-9">9</span>
+                <span class="number" id="num-10">10</span>
+            </div>
+        </div>
+        <div class="questions">
+            <div class="question" id="question1">
+                <p>Is Andrew the best Commissioner in fantasy football?</p>
+                <button onclick="checkAnswer(1, 'yes')">Yes</button>
+                <button onclick="checkAnswer(1, 'no')">No</button>
+            </div>
+            <div class="question hidden" id="question2">
+                <p>Do the Falcons suck?</p>
+                <button onclick="checkAnswer(2, 'yes')">Yes</button>
+                <button onclick="checkAnswer(2, 'no')">No</button>
+            </div>
+            <div class="question hidden" id="question3">
+                <p>Does Roger Goodell hate the Saints?</p>
+                <button onclick="checkAnswer(3, 'yes')">Yes</button>
+                <button onclick="checkAnswer(3, 'no')">No</button>
+            </div>
+            <div class="question hidden" id="question4">
+                <p>Did Tulane have the greatest single season turnaround in College Football History?</p>
+                <button onclick="checkAnswer(4, 'yes')">Yes</button>
+                <button onclick="checkAnswer(4, 'no')">No</button>
+            </div>
+            <div class="question hidden" id="question5">
+                <p>Was the 2019 LSU Football team the best team in CFB history?</p>
+                <button onclick="checkAnswer(5, 'yes')">Yes</button>
+                <button onclick="checkAnswer(5, 'no')">No</button>
+            </div>
+            <div class="question hidden" id="question6">
+                <p>Why are you still clicking on the wrong answers?</p>
+                <button onclick="checkAnswer(6, 'I\'m an idiot')">I'm an idiot</button>
+                <button onclick="checkAnswer(6, 'I like wasting time')">I like wasting time</button>
+            </div>
+            <div class="question hidden" id="question7">
+                <p>In what city is the original University of Louisiana located?</p>
+                <button onclick="checkAnswer(7, 'Baton Rouge')">Baton Rouge</button>
+                <button onclick="checkAnswer(7, 'Lafayette')">Lafayette</button>
+                <button onclick="checkAnswer(7, 'New Orleans')">New Orleans</button>
+            </div>
+            <div class="question hidden" id="question8">
+                <p>Which Hall of Fame QB was born in Louisiana?</p>
+                <button onclick="checkAnswer(8, 'Drew Brees')">Drew Brees</button>
+                <button onclick="checkAnswer(8, 'Terry Bradshaw')">Terry Bradshaw</button>
+            </div>
+            <div class="question hidden" id="question9">
+                <p>cos<sup>2</sup>(x) + sin<sup>2</sup>(x) = (e<sup>ix</sup> + e<sup>-ix</sup>)<sup>2</sup>/4 + sin<sup>2</sup>(x) = (e<sup>2ix</sup> + e<sup>-2ix</sup>)/4 + e<sup>2ln(sin(x))</sup> + 1/2 = ?</p>
+                <button onclick="checkAnswer(9, '1')">1</button>
+                <button onclick="checkAnswer(9, '435.7')">435.7</button>
+            </div>
+        </div>
+    </div>
+    <div class="confetti hidden" id="confetti"></div>
+    <script>
+        const correctAnswers = {
+            1: 'yes',
+            2: 'yes',
+            3: 'yes',
+            4: 'yes',
+            5: 'yes',
+            6: 'I\'m an idiot',
+            7: 'New Orleans',
+            8: 'Terry Bradshaw',
+            9: '1'
+        };
+
+        function checkAnswer(questionNumber, answer) {
+            const correctAnswer = correctAnswers[questionNumber];
+            if (answer === correctAnswer) {
+                if (questionNumber === 9) {
+                    revealNumberThree();
+                    showConfetti();
+                } else {
+                    revealNumberThree();
+                    showConfetti();
+                }
+                document.getElementById('question' + questionNumber).classList.add('hidden');
+            } else {
+                removeRandomNumber();
+                if (questionNumber === 9) {
+                    alert('Please refresh this page and try again');
+                } else {
+                    showNextQuestion(questionNumber + 1);
+                }
+            }
+        }
+
+        function revealNumberThree() {
+            document.getElementById('num-3').style.display = 'inline';
+            const numbers = document.querySelectorAll('.numbers-container .number');
+            numbers.forEach(number => {
+                if (number.id !== 'num-3') {
+                    number.style.display = 'none';
+                }
+            });
+        }
+
+        function removeRandomNumber() {
+            const numbers = Array.from(document.querySelectorAll('.numbers-container .number:not(#num-3)'));
+            if (numbers.length > 0) {
+                const randomIndex = Math.floor(Math.random() * numbers.length);
+                numbers[randomIndex].style.display = 'none';
+            }
+        }
+
+        function showNextQuestion(questionNumber) {
+            const questions = document.querySelectorAll('.question');
+            questions.forEach(q => q.classList.add('hidden'));
+            const nextQuestion = document.getElementById('question' + questionNumber);
+            if (nextQuestion) {
+                nextQuestion.classList.remove('hidden');
+            }
+        }
+
+        function showConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            confettiContainer.classList.remove('hidden');
+            confettiContainer.innerHTML = '';
+            for (let i = 0; i < 100; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.classList.add('confetti-piece');
+                confettiPiece.style.background = Math.random() > 0.5 ? 'forestgreen' : 'skyblue';
+                confettiPiece.style.left = `${Math.random() * 100}vw`;
+                confettiPiece.style.top = `${Math.random() * 100}vh`;
+                confettiPiece.style.animationDuration = `${Math.random() * 2 + 3}s`;
+                confettiContainer.appendChild(confettiPiece);
+            }
+        }
+    </script>
+</body>
+</html>
